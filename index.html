@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interação com Div e Container</title>
+    <style>
+      body {
+        background-color: #565651;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        max-height: 100vh;
+        max-width: 100vw;
+      }
+      #outer-div {
+        background-color: #00254e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #result-area {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      #container {
+        background-color: #5d83b1;
+        padding: 10px;
+        margin: 10px;
+        display: flex;
+        width: 100px;
+        height: 100px;
+      }
+      #content {
+        background-color: #8eb2d9;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .control-panel {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .control-panel label {
+        display: block;
+        margin-top: 10px;
+      }
+      .padding-inputs {
+        display: flex;
+        gap: 8px;
+      }
+      #code {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+      }
+      #css-code {
+        width: 500px;
+        height: 100px;
+        background-color: #ffffff;
+        color: #000000;
+        margin-top: 20px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="control-panel">
+      <h1>Margin and Padding Generator</h1>
+      <h2>Created for lazy people</h2>
+      <section class="padding-inputs">
+        <div>
+          <label for="padding-top">Padding Top:</label>
+          <input type="number" id="padding-top" value="10" />
+          <label for="padding-right">Padding Right:</label>
+          <input type="number" id="padding-right" value="10" />
+          <label for="padding-bottom">Padding Bottom:</label>
+          <input type="number" id="padding-bottom" value="10" />
+          <label for="padding-left">Padding Left:</label>
+          <input type="number" id="padding-left" value="10" />
+        </div>
+        <div>
+          <label for="margin-top">Margin Top:</label>
+          <input type="number" id="margin-top" value="10" />
+          <label for="margin-right">Margin Right:</label>
+          <input type="number" id="margin-right" value="10" />
+          <label for="margin-bottom">Margin Bottom:</label>
+          <input type="number" id="margin-bottom" value="10" />
+          <label for="margin-left">Margin Left:</label>
+          <input type="number" id="margin-left" value="10" />
+        </div>
+      </section>
+      <section>
+        <label for="unit-select">Unit:</label>
+        <select id="unit-select">
+          <option value="px">Pixels (px)</option>
+          <option value="rem">Rems (rem)</option>
+          <option value="em">Ems (em)</option>
+        </select>
+      </section>
+    </div>
+    <main id="result-area">
+      <div id="outer-div">
+        <div id="container">
+          <div id="content">Content</div>
+        </div>
+      </div>
+    </main>
+    <div id="code">
+      <textarea id="css-code" readonly></textarea>
+      <p>by MODERNABYTES SOFTWARE LTDA</p>
+    </div>
+
+    <script>
+      function updateStyles() {
+        var unit = document.getElementById("unit-select").value;
+
+        var paddingTop = document.getElementById("padding-top").value + unit;
+        var paddingRight =
+          document.getElementById("padding-right").value + unit;
+        var paddingBottom =
+          document.getElementById("padding-bottom").value + unit;
+        var paddingLeft = document.getElementById("padding-left").value + unit;
+
+        var marginTop = document.getElementById("margin-top").value + unit;
+        var marginRight = document.getElementById("margin-right").value + unit;
+        var marginBottom =
+          document.getElementById("margin-bottom").value + unit;
+        var marginLeft = document.getElementById("margin-left").value + unit;
+
+        var container = document.getElementById("container");
+        container.style.padding =
+          paddingTop +
+          " " +
+          paddingRight +
+          " " +
+          paddingBottom +
+          " " +
+          paddingLeft;
+        container.style.margin =
+          marginTop + " " + marginRight + " " + marginBottom + " " + marginLeft;
+
+        var cssCode = `
+                #container {
+                    padding: ${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft};
+                    margin: ${marginTop} ${marginRight} ${marginBottom} ${marginLeft};
+                }
+            `;
+        document.getElementById("css-code").value = cssCode;
+      }
+
+      document
+        .getElementById("padding-top")
+        .addEventListener("input", updateStyles);
+      document
+        .getElementById("padding-right")
+        .addEventListener("input", updateStyles);
+      document
+        .getElementById("padding-bottom")
+        .addEventListener("input", updateStyles);
+      document
+        .getElementById("padding-left")
+        .addEventListener("input", updateStyles);
+      document
+        .getElementById("margin-top")
+        .addEventListener("input", updateStyles);
+      document
+        .getElementById("margin-right")
+        .addEventListener("input", updateStyles);
+      document
+        .getElementById("margin-bottom")
+        .addEventListener("input", updateStyles);
+      document
+        .getElementById("margin-left")
+        .addEventListener("input", updateStyles);
+      document
+        .getElementById("unit-select")
+        .addEventListener("change", updateStyles);
+
+      window.onload = updateStyles;
+    </script>
+  </body>
+</html>
