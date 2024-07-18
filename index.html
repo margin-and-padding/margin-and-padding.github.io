@@ -7,6 +7,10 @@
       crossorigin="anonymous"
     ></script>
     <meta charset="UTF-8" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css"
+      rel="stylesheet"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,14 +18,14 @@
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Padding and Margin Generator | Easy CSS Tools for Developers</title>
+    <title>Padding and Margin | Easy CSS Tools for Developers</title>
     <meta
       name="description"
       content="Generate CSS padding and margin effortlessly with our easy-to-use tool. Perfect for lazy developers looking to streamline their workflow."
     />
     <style>
       body {
-        background-color: #333333;
+        background-color: #0e0f0f;
         color: #ffffff;
         font-family: "Inter", sans-serif;
         margin: 0;
@@ -34,6 +38,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        border: 1px solid red;
       }
       #result-area {
         display: flex;
@@ -43,11 +48,9 @@
       }
       #container {
         background-color: #edafb8;
-        padding: 10px;
-        margin: 10px;
         display: flex;
-        width: 100px;
-        height: 100px;
+        width: 100%;
+        height: 100%;
       }
       #content {
         background-color: #e8ddb5;
@@ -72,6 +75,11 @@
       .padding-inputs {
         display: flex;
         gap: 8px;
+        border: 1px solid #cccccc22;
+        padding: 16px;
+        border-radius: 5px;
+        box-shadow: 0 0 7px rgb(255, 255, 255, 0.2);
+        padding-top: 6px;
       }
       #code {
         display: flex;
@@ -79,15 +87,13 @@
         align-items: center;
         flex-direction: column;
         width: 100%;
-      }
-      #css-code {
-        width: 500px;
-        height: 100px;
-        background-color: #ffffff;
-        color: #000000;
         margin-top: 20px;
-        border: 1px solid #ccc;
       }
+      #code pre {
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgb(255, 255, 255, 0.5);
+      }
+
       input {
         padding: 5px;
         border-radius: 5px;
@@ -110,32 +116,43 @@
       label {
         padding-bottom: 5px;
       }
+
+      button {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007bff;
+        color: #ffffff;
+        cursor: pointer;
+        margin-top: 10px;
+      }
     </style>
   </head>
   <body>
     <div class="control-panel">
-      <h1>Margin and Padding Generator</h1>
+      <h1>Margin and Padding</h1>
       <h2>Created for lazy people</h2>
+
       <section class="padding-inputs">
         <div>
           <label for="padding-top">Padding Top:</label>
-          <input type="number" id="padding-top" value="10" />
+          <input type="number" id="padding-top" value="10" min="0" />
           <label for="padding-right">Padding Right:</label>
-          <input type="number" id="padding-right" value="10" />
+          <input type="number" id="padding-right" value="10" min="0" />
           <label for="padding-bottom">Padding Bottom:</label>
-          <input type="number" id="padding-bottom" value="10" />
+          <input type="number" id="padding-bottom" value="10" min="0" />
           <label for="padding-left">Padding Left:</label>
-          <input type="number" id="padding-left" value="10" />
+          <input type="number" id="padding-left" value="10" min="0" />
         </div>
         <div>
           <label for="margin-top">Margin Top:</label>
-          <input type="number" id="margin-top" value="10" />
+          <input type="number" id="margin-top" value="10" min="0" />
           <label for="margin-right">Margin Right:</label>
-          <input type="number" id="margin-right" value="10" />
+          <input type="number" id="margin-right" value="10" min="0" />
           <label for="margin-bottom">Margin Bottom:</label>
-          <input type="number" id="margin-bottom" value="10" />
+          <input type="number" id="margin-bottom" value="10" min="0" />
           <label for="margin-left">Margin Left:</label>
-          <input type="number" id="margin-left" value="10" />
+          <input type="number" id="margin-left" value="10" min="0" />
         </div>
       </section>
       <section>
@@ -150,15 +167,20 @@
     <main id="result-area">
       <div id="outer-div">
         <div id="container">
-          <div id="content">Content</div>
+          <div id="content">
+            This is a content div<br />Pink is padding<br />Blue is margin
+          </div>
         </div>
       </div>
     </main>
     <div id="code">
-      <textarea id="css-code" readonly></textarea>
+      <pre><code id="highlighted-code" class="language-css"></code></pre>
+      <button id="copy-button">Copy CSS</button>
       <p>by MODERNABYTES SOFTWARE LTDA</p>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-css.min.js"></script>
     <script>
       function updateStyles() {
         var unit = document.getElementById("unit-select").value;
@@ -188,13 +210,9 @@
         container.style.margin =
           marginTop + " " + marginRight + " " + marginBottom + " " + marginLeft;
 
-        var cssCode = `
-                #container {
-                    padding: ${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft};
-                    margin: ${marginTop} ${marginRight} ${marginBottom} ${marginLeft};
-                }
-            `;
-        document.getElementById("css-code").value = cssCode;
+        var cssCode = `padding: ${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft};\nmargin: ${marginTop} ${marginRight} ${marginBottom} ${marginLeft};`;
+        document.getElementById("highlighted-code").textContent = cssCode;
+        Prism.highlightElement(document.getElementById("highlighted-code"));
       }
 
       document
@@ -226,6 +244,16 @@
         .addEventListener("change", updateStyles);
 
       window.onload = updateStyles;
+
+      document.getElementById("copy-button").addEventListener("click", () => {
+        const codeElement = document.getElementById("highlighted-code");
+        const range = document.createRange();
+        range.selectNode(codeElement);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+      });
     </script>
   </body>
 </html>
